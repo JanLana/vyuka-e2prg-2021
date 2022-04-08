@@ -10,7 +10,7 @@ public class SPrvek {
         this.dalsi = dalsi;
         this.predchozi = predchozi;
 
-        Graph.addNode(this, "dalsi", "predchozi");
+        //Graph.addNode(this, "dalsi", "predchozi");
     }
 
     public void vypisPopredu() {

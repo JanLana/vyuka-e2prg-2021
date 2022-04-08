@@ -21,5 +21,7 @@ public class PismenkovyStrom {
 
         // pro potomka  potomek.pridejSlovo(slovo bez prvniho pismenka)
 
+        return 0;
+
     }
 }
