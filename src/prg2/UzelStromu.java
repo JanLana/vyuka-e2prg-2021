@@ -5,6 +5,9 @@ public class UzelStromu {
     UzelStromu levy;
     UzelStromu pravy;
 
+
+
+
     public UzelStromu(int hodnota, UzelStromu levy, UzelStromu pravy) {
         this.hodnota = hodnota;
         this.levy = levy;
