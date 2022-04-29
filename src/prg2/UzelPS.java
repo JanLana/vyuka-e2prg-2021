@@ -4,31 +4,49 @@ import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UzelPS {
     char znak;
-    int pocet;
-
     UzelPS[] potomci;
+    int pocetSlov;
+
 
     public UzelPS(char znak) {
         this.znak = znak;
-        pocet = 0;
         potomci = new UzelPS[155];
+        pocetSlov = 0;
     }
 
     @Override
     public String toString() {
         return "UzelPS{" +
                 "znak=" + znak +
-                ", pocet=" + pocet +
                 ", potomci=" + Arrays.toString(potomci) +
                 '}';
     }
 
+    public int nejvetsiPocetSlov() {
+        int maximum = pocetSlov;
+
+        for (int i = 0; i < potomci.length; i++) {
+            if (potomci[i] != null) {
+                int maximumPotomek = potomci[i].nejvetsiPocetSlov();
+
+                if (maximum < maximumPotomek) {
+                    maximum = maximumPotomek;
+                }
+            }
+        }
+
+        return maximum;
+
+    }
+
     public void pridejSlovo(String vstup) {
         if (vstup.length() == 0) {
+            pocetSlov += 1;
             return;
         }
         //System.out.println("pridejSlovo('" + vstup + "')");
@@ -47,21 +65,6 @@ public class UzelPS {
         }
 
         p.pridejSlovo(vstup.substring(1));
-
-         /*
-            //if (uzel != null && ch == uzel.znak) {
-            if (potomci[i] == null && ch == potomci[i].znak) {
-                p = potomci[i];
-            }
-
-            if (potomci[i] == null) {
-                potomci[i] = new UzelPS(ch);
-                // FIXME: pridej p do potomci
-            } */
-
-
-
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -72,14 +75,22 @@ public class UzelPS {
 
         while(sc.hasNext()) {
             String line = sc.nextLine();
-            String[] slova = line.split("[ .,!-:?“„]");
+            String[] slova = line.split("[ .,!-:?“„»;‚‘–<]");
 
             for(String s: slova) {
-                koren.pridejSlovo(s);
+                koren.pridejSlovo(s.toLowerCase());
             }
         }
 
-        System.out.println(koren);
+        System.out.println(koren.nejvetsiPocetSlov());
+
+        /*
+        for (int i = 0; i < koren.potomci.length; i++) {
+            if (koren.potomci[i] != null)
+                System.out.print(koren.potomci[i].znak);
+        }
+
+         */
     }
 }//
 // UzelPS{znak= , pocet=0,

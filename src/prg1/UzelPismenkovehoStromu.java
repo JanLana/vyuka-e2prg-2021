@@ -3,15 +3,18 @@ package prg1;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UzelPismenkovehoStromu {
     char znak;
     ArrayList<UzelPismenkovehoStromu> potomci;
+    int pocetSlov;
 
     public UzelPismenkovehoStromu(char znak) {
         this.znak = znak;
         potomci = new ArrayList<>();
+        pocetSlov = 0;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UzelPismenkovehoStromu {
 
     public void pridej(String slovo) {
         if (slovo.length() == 0 ) {
-            System.out.println("prazdne slovo");
+            pocetSlov += 1;
             return;
         }
         char ch = slovo.charAt(0);
@@ -45,6 +48,8 @@ public class UzelPismenkovehoStromu {
         UzelPismenkovehoStromu p = hledejPotomka(ch);
         p.pridej(slovo.substring(1));
     }
+
+
 
 
     public static void main(String[] args) throws IOException {
@@ -55,15 +60,16 @@ public class UzelPismenkovehoStromu {
 
         while(sc.hasNext()) {
             String line = sc.nextLine();
-            String[] slova = line.split("[ .,;„“!-:?‘]");
+            String[] slova = line.split("[\\[\\] .,;„“!-:?‘–‚»<]");
             for (String s : slova) {
-                strom.pridej(s);
+                strom.pridej(s.toLowerCase());
             }
 
         }
 
-
-        System.out.println(strom);
+        for (UzelPismenkovehoStromu u: strom.potomci) {
+            System.out.print(u.znak);
+        }
     }
 }
 
