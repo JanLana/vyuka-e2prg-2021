@@ -4,13 +4,20 @@ import java.util.ArrayList;
 
 public class MyHeapSort {
     int[] halda;
+    int velikostHaldy;
 
     public MyHeapSort(int[] vstup) {
         this.halda = vstup;
+        velikostHaldy = 1;
+
         this.setridSe();
     }
 
     public void setridSe() {
+        while (velikostHaldy < halda.length) {
+            pridejPrvek();
+        }
+        System.out.println(halda);
 
     }
 
@@ -18,23 +25,41 @@ public class MyHeapSort {
         return halda.get(0);
     }*/
 
-    public void pridejPrvek(int x) {
-        halda.add(x);
-        int indexMuj = halda.size() - 1;
+    public void pridejPrvek() {
+        velikostHaldy += 1;
+        int indexMuj = velikostHaldy - 1;
 
-        if (indexMuj == 0) {
-            return;
+        while (indexMuj == 0) {
+
+            int indexOtce = (indexMuj - 1) / 2;
+            if (halda[indexMuj] > halda[indexOtce]) {
+                prohod(indexMuj, indexOtce);
+            } else {
+                return;
+            }
+            indexMuj = indexOtce;
+        }
+    }
+
+    void prohod(int indexA, int indexB) {
+        int y;
+        y = halda[indexA];
+        halda[indexA] =  halda[indexB];
+        halda[indexB] = y;
+    }
+
+    void odeberPrvek() {
+        int indexMuj = velikostHaldy -1;
+        velikostHaldy--;
+
+        prohod(0, indexMuj);
+        int indexSynaA = 2*indexMuj + 1;
+        int indexSynaB = 2*indexMuj + 2;
+
+        while(indexMuj < velikostHaldy) {
+
         }
 
-        int indexOtce = (indexMuj -1) / 2;
-        if (halda.get(indexMuj) > halda.get(indexOtce)) {
-            int y;
-            y = halda.get(indexMuj);
-            halda.set(indexMuj, halda.get(indexOtce));
-            halda.set(indexOtce, y);
-        } else {
-            return;
-        }
 
     }
 
